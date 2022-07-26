@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function features()
+    {
+        return $this->belongsToMany(Feature::class)->withPivot('is_enabled');
+    }
 }

@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function features()
     {
-        return $this->belongsToMany(Feature::class)->withPivot('is_enabled');
+        return $this->belongsToMany(Feature::class, 'user_feature')->withPivot('is_enabled');
     }
 }

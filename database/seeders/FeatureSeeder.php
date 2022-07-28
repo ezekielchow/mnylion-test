@@ -15,9 +15,7 @@ class FeatureSeeder extends Seeder
      */
     public function run()
     {
-        $features = ['loan', 'ewallet', 'salary'];
-
-        foreach ($features as $feature) {
+        foreach (Feature::ALL_FEATURES as $feature) {
             Feature::firstOrCreate([
                 'name' => $feature
             ]);

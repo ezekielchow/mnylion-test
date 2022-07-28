@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class UserFeature extends Pivot
 {
     use HasFactory;
+
+    protected $table = 'user_feature';
 }

@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\UserFeature;
 use Illuminate\Database\Seeder;
 
-class FeatureUserSeeder extends Seeder
+class UserFeatureSeeder extends Seeder
 {
     /**
      * Run the database seeds.

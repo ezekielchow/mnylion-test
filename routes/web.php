@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('feature')->group(function () {
     Route::get('/', [FeatureController::class, 'checkAccess'])->name('feature.checkAccess');
+    Route::post('/', [FeatureController::class, 'update'])->name('feature.update');
 });

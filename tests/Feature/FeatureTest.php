@@ -13,13 +13,6 @@ class FeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->seed(DatabaseSeeder::class);
-    }
-
     /**
      * @test
      */
@@ -100,5 +93,55 @@ class FeatureTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson(['canAccess' => false]);
+    }
+
+    /**
+     * @test
+     */
+    public function test_update_enabling_feature_for_user()
+    {
+        $featureName = Feature::TYPE_LOAN;
+        $feature = Feature::firstWhere('name', $featureName);
+
+        $user = User::firstWhere('email', 'test@moneylion.com');
+
+        $user->features()->updateExistingPivot($feature->id, [
+            'is_enabled' => false
+        ]);
+
+        $response = $this->post("/feature", [
+            'featureName' => Feature::TYPE_LOAN,
+            'email' => 'test@moneylion.com',
+            'enable' => true
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([]);
+        $this->assertEquals($user->features()->where('name', Feature::TYPE_LOAN)->wherePivot('is_enabled', 1)->exists(), true);
+    }
+
+    /**
+     * @test
+     */
+    public function test_update_disabling_feature_for_user()
+    {
+        $featureName = Feature::TYPE_LOAN;
+        $feature = Feature::firstWhere('name', $featureName);
+
+        $user = User::firstWhere('email', 'test@moneylion.com');
+
+        $user->features()->updateExistingPivot($feature->id, [
+            'is_enabled' => true
+        ]);
+
+        $response = $this->post("/feature", [
+            'featureName' => Feature::TYPE_LOAN,
+            'email' => 'test@moneylion.com',
+            'enable' => false
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([]);
+        $this->assertEquals($user->features()->where('name', Feature::TYPE_LOAN)->wherePivot('is_enabled', 0)->exists(), true);
     }
 }

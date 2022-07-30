@@ -9,7 +9,7 @@
 ## Data seeded
 - Use test@moneylion.com for email
 - Available features: loan,ewallet,salary
-- All features are disable for this user by default
+- All features are disabled for this user by default
 
 ## Testing
 - Run ```$ sail artisan test```
